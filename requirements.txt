@@ -1,0 +1,6 @@
+requests
+boto3
+azure-storage-blob
+pre-commit
+black
+psutil

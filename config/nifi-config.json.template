@@ -1,0 +1,62 @@
+{
+  "nifi_api_url": "https://{hostname}:8443/nifi-api",
+  "nifi_token_url": "https://{hostname}:8443/nifi-api/access/token",
+  "use_token_auth": true,
+  "nifi_token_lifetime_seconds": 43200,
+  "nifi_timeout_seconds": 10,
+  "log_level": "INFO",
+
+  "collection_intervals_seconds": {
+    "global_default": 300,
+    "Processor": 120,
+    "Connection": 120,
+    "ControllerServices": 600,
+    "ReportingTasks": 600,
+    "Bulletins": 60,
+    "SystemDiagnostics": 3600,
+    "System": 180
+  },
+
+  "components_to_monitor": [
+    "Processor",
+    "Connection",
+    "ControllerServices",
+    "ReportingTasks",
+    "Bulletins",
+    "SystemDiagnostics",
+    "System"
+  ],
+  
+  "monitored_processor_names": [],
+  "flows_to_monitor": [],
+
+  "processor_metrics": [
+    "nifi_amount_bytes_written",
+    "nifi_amount_threads_active",
+    "nifi_amount_items_output",
+    "nifi_amount_bytes_read",
+    "nifi_average_lineage_duration"
+  ],
+  "connection_metrics": [
+      "queuedCount",
+      "queuedSize",
+      "backPressureObjectThreshold",
+      "backPressureDataSizeThreshold"
+  ],
+  "jvm_metrics": [
+      "heapUsed",
+      "heapUsage",
+      "totalThreads"
+  ],
+  "controller_service_metrics": [
+      "runStatus",
+      "validationStatus",
+      "activeThreadCount"
+  ],
+  "reporting_task_metrics": [
+      "runStatus",
+      "activeThreadCount"
+  ]
+}
+
+

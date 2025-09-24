@@ -1,0 +1,12 @@
+[
+  {
+    "id": "b2c3d4e5-01f2-g3h4-i5j6-k7l8m9n0o1p2",
+    "name": "To LogAttribute",
+    "flow_name": "Critical-Ingest-Flow",
+    "queuedCount": "50",
+    "queuedSize": "50 KB",
+    "collection_id": "f5e4d3c2-b1a0-9876-5432-1fedcba98765",
+    "hostname": "nifi-node-01.your.domain.com",
+    "collection_timestamp": "2025-07-22T15:51:00.123456Z"
+  }
+]

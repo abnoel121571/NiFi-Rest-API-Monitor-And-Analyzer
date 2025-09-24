@@ -1,0 +1,21 @@
+[
+  {
+    "timestamp": "2025-07-17T20:45:00.123456Z",
+    "cpu_percent": 45.5,
+    "cpu_cores_logical": 8,
+    "cpu_cores_physical": 4,
+    "memory_total_mb": 16384.0,
+    "memory_used_mb": 8192.0,
+    "memory_percent": 50.0,
+    "disk_total_gb": 499.0,
+    "disk_used_gb": 250.0,
+    "disk_percent": 50.1,
+    "disk_io_read_count": 1234567,
+    "disk_io_write_count": 7654321,
+    "disk_io_read_bytes": 1099511627776,
+    "disk_io_write_bytes": 2199023255552,
+    "collection_id": "f5e4d3c2-b1a0-9876-5432-1fedcba98765",
+    "hostname": "nifi-node-01.your.domain.com",
+    "collection_timestamp": "2025-07-17T20:55:00.123456Z"
+  }
+]

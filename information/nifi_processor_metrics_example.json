@@ -1,0 +1,17 @@
+[
+  {
+    "id": "a1b2c3d4-01e2-f3g4-h5i6-j7k8l9m0n1o2",
+    "name": "GenerateFlowFile",
+    "type": "GenerateFlowFile",
+    "runStatus": "RUNNING",
+    "flow_name": "Critical-Ingest-Flow",
+    "nifi_amount_bytes_written": 10240,
+    "nifi_amount_threads_active": 1,
+    "nifi_amount_items_output": 100,
+    "nifi_amount_bytes_read": 0,
+    "nifi_average_lineage_duration": 5,
+    "collection_id": "f5e4d3c2-b1a0-9876-5432-1fedcba98765",
+    "hostname": "nifi-node-01.your.domain.com",
+    "collection_timestamp": "2025-07-22T15:51:00.123456Z"
+  }
+]

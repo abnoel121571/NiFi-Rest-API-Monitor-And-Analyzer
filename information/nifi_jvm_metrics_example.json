@@ -1,0 +1,12 @@
+[
+  {
+    "id": "jvm_metrics",
+    "heapUsed": "4.1 GB",
+    "heapUsage": "51%",
+    "totalThreads": 128,
+    "daemonThreads": 45,
+    "collection_id": "f5e4d3c2-b1a0-9876-5432-1fedcba98765",
+    "hostname": "nifi-node-01.your.domain.com",
+    "collection_timestamp": "2025-07-17T20:55:00.123456Z"
+  }
+]

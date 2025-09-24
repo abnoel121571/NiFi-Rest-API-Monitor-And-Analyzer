@@ -1,0 +1,9 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configuration files with sensitive data
+config/secrets.json
+config/nifi-config.json
+nifi_metrics_collector.egg-info

@@ -1,4 +1,4 @@
-i# NiFi REST API Monitor
+# NiFi REST API Monitor
 
 A modular Python application to collect, monitor, and store a wide range of Apache NiFi metrics via the REST API. It is designed for clustered environments and provides detailed insights into the health and performance of your data flows.
 
@@ -18,6 +18,12 @@ This monitor is designed to run as a **distributed agent**, which is the recomme
 
 ---
 
+## 🚀 Install the python project: 
+
+pip install -e .
+
+---
+
 ## 📦 Project Structure
 ```
 nifi_metrics_collector/
@@ -32,6 +38,10 @@ nifi_metrics_collector/
 │   └── ... (Test files)
 ├── pyproject.toml             # Project definition
 └── README.md
+├── analysis/
+│   └── lib
+│       └── ... (Core logic modules)
+│   └── troubleshoot.py        # Analysis script for adhoc investigation
 ```
 
 ---

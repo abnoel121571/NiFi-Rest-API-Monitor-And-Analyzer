@@ -67,3 +67,4 @@ def write_to_local(secrets, collection_id, hostname, collection_timestamp, **met
     output_directory = secrets.get("local_output_directory", "/tmp/nifi_metrics")
     _write_metrics("local", None, output_directory, collection_id, hostname, collection_timestamp, **metric_collections)
 
+

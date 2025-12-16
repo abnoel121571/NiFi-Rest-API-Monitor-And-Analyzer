@@ -184,3 +184,4 @@ def extract_cluster_summary_metrics(cluster_summary):
     except KeyError as e:
         logging.error(f"Could not extract cluster summary metrics, payload structure issue: {e}")
     return metrics
+

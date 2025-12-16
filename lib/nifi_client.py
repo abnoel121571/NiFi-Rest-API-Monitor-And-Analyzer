@@ -44,4 +44,3 @@ def get_nifi_bulletins(nifi_api_url, auth=None, token=None, timeout=10):
     url = f"{nifi_api_url}/flow/bulletin-board"
     return _get_request(url, auth, token, timeout)
 
-

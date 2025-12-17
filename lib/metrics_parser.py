@@ -1,3 +1,4 @@
+
 import logging
 
 def extract_processor_metrics(processors, metric_keys, flow_name=None, processor_name_filter=None):
@@ -140,6 +141,111 @@ def extract_bulletin_metrics(bulletins):
         metrics.append(bulletin)
     return metrics
 
+def extract_provenance_metrics(provenance_response, flow_name=None, process_group_id=None):
+    """
+    Extracts and formats provenance events from a provenance query response.
+    
+    Args:
+        provenance_response: The response from query_nifi_provenance()
+        flow_name: Optional flow name to tag events with
+        process_group_id: Optional process group ID to tag events with
+    
+    Returns:
+        List of provenance event dictionaries with selected fields
+    """
+    metrics = []
+    
+    try:
+        provenance_data = provenance_response.get("provenance", {})
+        results = provenance_data.get("results", {})
+        events = results.get("provenanceEvents", [])
+        
+        logging.info(f"Processing {len(events)} provenance events")
+        
+        for event in events:
+            try:
+                # Extract key provenance fields
+                entry = {
+                    "event_id": event.get("eventId"),
+                    "event_type": event.get("eventType"),
+                    "event_time": event.get("eventTime"),
+                    "event_duration": event.get("eventDuration"),
+                    "lineage_start_date": event.get("lineageStartDate"),
+                    "component_id": event.get("componentId"),
+                    "component_type": event.get("componentType"),
+                    "component_name": event.get("componentName"),
+                    "flowfile_uuid": event.get("flowFileUuid"),
+                    "file_size": event.get("fileSize"),
+                    "file_size_bytes": event.get("fileSizeBytes"),
+                    "cluster_node_id": event.get("clusterNodeId"),
+                    "cluster_node_address": event.get("clusterNodeAddress"),
+                    
+                    # Process group information
+                    "group_id": event.get("groupId"),  # From NiFi API response
+                    
+                    # Parent/child relationships
+                    "parent_uuids": event.get("parentUuids", []),
+                    "child_uuids": event.get("childUuids", []),
+                    
+                    # Content claims
+                    "content_equal": event.get("contentEqual"),
+                    "input_content_available": event.get("inputContentAvailable"),
+                    "output_content_available": event.get("outputContentAvailable"),
+                    
+                    # Transit details (for SEND/RECEIVE events)
+                    "transit_uri": event.get("transitUri"),
+                    
+                    # Relationship (for ROUTE events)
+                    "relationship": event.get("relationship"),
+                    
+                    # Details field (can contain additional context)
+                    "details": event.get("details"),
+                    
+                    # Attributes (optional - can be large)
+                    # Uncomment if you need to capture FlowFile attributes
+                    # "attributes": event.get("attributes", {}),
+                    # "updated_attributes": event.get("updatedAttributes", {}),
+                }
+                
+                # Add flow metadata if provided (from config)
+                if flow_name:
+                    entry["flow_name"] = flow_name
+                if process_group_id:
+                    entry["process_group_id"] = process_group_id
+                
+                metrics.append(entry)
+                
+            except Exception as e:
+                logging.warning(f"Failed to extract provenance event {event.get('eventId', 'unknown')}: {e}")
+                continue
+        
+        # Add query metadata as a summary entry
+        summary = {
+            "event_id": "query_summary",
+            "event_type": "QUERY_SUMMARY",
+            "total_count": results.get("totalCount", 0),
+            "total_bytes": results.get("total", 0),
+            "oldest_event": results.get("oldestEvent"),
+            "query_duration_millis": provenance_data.get("results", {}).get("queryDuration"),
+            "percent_completed": provenance_data.get("percentCompleted", 100),
+        }
+        
+        # Add flow metadata to summary as well
+        if flow_name:
+            summary["flow_name"] = flow_name
+        if process_group_id:
+            summary["process_group_id"] = process_group_id
+        
+        metrics.append(summary)
+        
+        logging.info(f"Extracted {len(metrics)-1} provenance events plus 1 summary")
+        
+    except Exception as e:
+        logging.error(f"Failed to extract provenance metrics: {e}", exc_info=True)
+        return []
+    
+    return metrics
+
 def extract_cluster_summary_metrics(cluster_summary):
     """Extracts key metrics from the cluster summary payload."""
     metrics = []
@@ -175,7 +281,7 @@ def extract_cluster_summary_metrics(cluster_summary):
                 "bytesTransferred": node.get("bytesTransferred"),
                 "bytesRead": node.get("bytesRead"),
                 "bytesWritten": node.get("bytesWritten"),
-                "diskUsage": node.get("diskUsage"), # This is a list of objects
+                "diskUsage": node.get("diskUsage"),
                 "heapUsage": node.get("heapUsage"),
                 "processorLoadAverage": node.get("processorLoadAverage"),
                 "uptime": node.get("uptime")
@@ -184,6 +290,3 @@ def extract_cluster_summary_metrics(cluster_summary):
     except KeyError as e:
         logging.error(f"Could not extract cluster summary metrics, payload structure issue: {e}")
     return metrics
-
-
-

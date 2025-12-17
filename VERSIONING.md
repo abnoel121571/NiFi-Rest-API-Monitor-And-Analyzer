@@ -261,3 +261,9 @@ Version module: lib/version.py
 File reader: lib/file_reader.py
 Tests: tests/test_versioning.py
 
+
+Semantic Versioning: https://semver.org/
+Version module: lib/version.py
+File reader: lib/file_reader.py
+Tests: tests/test_versioning.py
+

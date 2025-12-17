@@ -48,6 +48,9 @@ nifi_metrics_collector/
 │   ├── lib/
 │   │   └── ... (Core logic modules)
 │   └── troubleshoot.py        # Analysis script for adhoc investigation
+├── docs/                      # Supporting Documentation
+│   ├── versions/
+│   ├── provenance/
 ├── pyproject.toml             # Project definition
 └── README.md
 ```

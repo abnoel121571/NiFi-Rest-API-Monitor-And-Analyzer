@@ -1,171 +1,202 @@
-Documentation Index
+# Documentation Index
+
 Quick reference guide to navigate all documentation for the NiFi Metrics Collector.
 
-📚 Main Documentation
-README.md
-Start here! Main project documentation covering:
+---
 
-Project overview and key features
-Installation instructions
-Deployment model (distributed agents)
-Configuration guide
-Metric collection setup
-Storage options (AWS, Azure, Local)
-Quick start examples
+## 📚 Main Documentation
 
-Read this first if you're:
+### [README.md](README.md)
+**Start here!** Main project documentation covering:
+- Project overview and key features
+- Installation instructions
+- Deployment model (distributed agents)
+- Configuration guide
+- Metric collection setup
+- Storage options (AWS, Azure, Local)
+- Quick start examples
 
-New to the project
-Setting up the collector
-Configuring metrics collection
-Deploying to NiFi nodes
+**Read this first if you're:**
+- New to the project
+- Setting up the collector
+- Configuring metrics collection
+- Deploying to NiFi nodes
 
+---
 
-README_ANALYSIS.md
-Complete analysis guide covering the troubleshooting tool:
+### [README_ANALYSIS.md](README_ANALYSIS.md)
+**Complete analysis guide** covering the troubleshooting tool:
+- Interactive CLI usage
+- All analysis commands (30+ commands)
+- Provenance analysis guide
+- Health monitoring
+- Performance troubleshooting
+- Workflow examples
+- Advanced usage
 
-Interactive CLI usage
-All analysis commands (30+ commands)
-Provenance analysis guide
-Health monitoring
-Performance troubleshooting
-Workflow examples
-Advanced usage
+**Read this if you're:**
+- Using the analysis tool
+- Troubleshooting NiFi flows
+- Analyzing provenance data
+- Investigating data loss or performance issues
 
-Read this if you're:
+---
 
-Using the analysis tool
-Troubleshooting NiFi flows
-Analyzing provenance data
-Investigating data loss or performance issues
+## 🔧 Technical Documentation
 
+### [VERSIONING.md](VERSIONING.md)
+**Schema versioning implementation guide:**
+- Version management system
+- How to add new versions
+- Compatibility checking
+- Migration strategies
+- Best practices
 
-🔧 Technical Documentation
-VERSIONING.md
-Schema versioning implementation guide:
+**Read this if you're:**
+- Contributing to the project
+- Upgrading between versions
+- Understanding data compatibility
+- Planning schema changes
 
-Version management system
-How to add new versions
-Compatibility checking
-Migration strategies
-Best practices
+---
 
-Read this if you're:
+### [VERSION_QUICKREF.md](VERSION_QUICKREF.md)
+**Quick reference for developers:**
+- Common code snippets
+- Version checking commands
+- Quick troubleshooting
+- API reference
 
-Contributing to the project
-Upgrading between versions
-Understanding data compatibility
-Planning schema changes
+**Read this if you're:**
+- Developing features
+- Need quick version info
+- Writing scripts
+- Debugging version issues
 
+---
 
-VERSION_QUICKREF.md
-Quick reference for developers:
+### [INTEGRATION_SUMMARY.md](INTEGRATION_SUMMARY.md)
+**How versioning integrates with the system:**
+- Collection side integration
+- Analysis side integration
+- End-to-end flow
+- Architecture diagrams
 
-Common code snippets
-Version checking commands
-Quick troubleshooting
-API reference
+**Read this if you're:**
+- Understanding system architecture
+- Contributing major features
+- Reviewing integration points
 
-Read this if you're:
+---
 
-Developing features
-Need quick version info
-Writing scripts
-Debugging version issues
+## 📖 User Guides
 
+### [PROVENANCE_ANALYSIS_GUIDE.md](PROVENANCE_ANALYSIS_GUIDE.md)
+**Detailed provenance analysis guide:**
+- All provenance commands explained
+- Real-world use cases
+- Workflow examples
+- Best practices
+- Troubleshooting tips
 
-INTEGRATION_SUMMARY.md
-How versioning integrates with the system:
+**Read this if you're:**
+- Using provenance analysis features
+- Investigating data loss
+- Tracing FlowFile lineage
+- Optimizing flow performance
 
-Collection side integration
-Analysis side integration
-End-to-end flow
-Architecture diagrams
+---
 
-Read this if you're:
+### [PROVENANCE_FEATURES_SUMMARY.md](PROVENANCE_FEATURES_SUMMARY.md)
+**Complete provenance feature overview:**
+- Feature summary
+- Command reference
+- Use cases and examples
+- Technical architecture
+- Business impact
 
-Understanding system architecture
-Contributing major features
-Reviewing integration points
+**Read this if you're:**
+- Learning about provenance features
+- Evaluating capabilities
+- Presenting to management
+- Planning implementation
 
+---
 
-📖 User Guides
-PROVENANCE_ANALYSIS_GUIDE.md
-Detailed provenance analysis guide:
+### [QUICKSTART_VERSIONS.md](QUICKSTART_VERSIONS.md)
+**5-minute version system guide:**
+- Quick start steps
+- Common scenarios
+- Troubleshooting
+- What you need to know
 
-All provenance commands explained
-Real-world use cases
-Workflow examples
-Best practices
-Troubleshooting tips
+**Read this if you're:**
+- Getting started quickly
+- Need basic version info
+- Handling version errors
+- Learning the basics
 
-Read this if you're:
+---
 
-Using provenance analysis features
-Investigating data loss
-Tracing FlowFile lineage
-Optimizing flow performance
+## 🚀 Getting Started Paths
 
-
-PROVENANCE_FEATURES_SUMMARY.md
-Complete provenance feature overview:
-
-Feature summary
-Command reference
-Use cases and examples
-Technical architecture
-Business impact
-
-Read this if you're:
-
-Learning about provenance features
-Evaluating capabilities
-Presenting to management
-Planning implementation
-
-
-QUICKSTART_VERSIONS.md
-5-minute version system guide:
-
-Quick start steps
-Common scenarios
-Troubleshooting
-What you need to know
-
-Read this if you're:
-
-Getting started quickly
-Need basic version info
-Handling version errors
-Learning the basics
-
-
-🚀 Getting Started Paths
-Path 1: First Time Setup
+### Path 1: First Time Setup
+```
 1. README.md (Installation & Configuration)
 2. Run collector on one node
 3. README_ANALYSIS.md (Analysis basics)
 4. Try the troubleshooting tool
-Path 2: Learning Analysis
+```
+
+### Path 2: Learning Analysis
+```
 1. README_ANALYSIS.md (Command reference)
 2. PROVENANCE_ANALYSIS_GUIDE.md (Detailed guide)
 3. Try commands on your data
 4. Review workflow examples
-Path 3: Understanding Versioning
+```
+
+### Path 3: Understanding Versioning
+```
 1. QUICKSTART_VERSIONS.md (5-minute intro)
 2. Use the version commands
 3. VERSIONING.md (Full details if needed)
-Path 4: Contributing
+```
+
+### Path 4: Contributing
+```
 1. README.md (Project overview)
 2. VERSIONING.md (Version system)
 3. INTEGRATION_SUMMARY.md (Architecture)
 4. Review code in lib/ and analysis/lib/
+```
 
-🔍 Quick Find
-"How do I...?"
-TaskDocumentSectionInstall the collectorREADME.mdInstallationConfigure metricsREADME.mdConfigurationRun the collectorREADME.mdPart 1: Metric CollectionUse the analysis toolREADME_ANALYSIS.mdQuick StartFind dropped FlowFilesREADME_ANALYSIS.mdProvenance AnalysisTrace a FlowFileREADME_ANALYSIS.mdtrace-flowfile commandCheck versionsQUICKSTART_VERSIONS.mdQuick CommandsUnderstand provenancePROVENANCE_ANALYSIS_GUIDE.mdOverviewAdd new featuresVERSIONING.mdAdding New VersionsFix version errorsQUICKSTART_VERSIONS.mdTroubleshootingDeploy to clusterREADME.mdDeployment ModelOptimize performanceREADME_ANALYSIS.mdTypical Workflows
+---
 
-📁 File Organization
+## 🔍 Quick Find
+
+### "How do I...?"
+
+| Task | Document | Section |
+|------|----------|---------|
+| Install the collector | README.md | Installation |
+| Configure metrics | README.md | Configuration |
+| Run the collector | README.md | Part 1: Metric Collection |
+| Use the analysis tool | README_ANALYSIS.md | Quick Start |
+| Find dropped FlowFiles | README_ANALYSIS.md | Provenance Analysis |
+| Trace a FlowFile | README_ANALYSIS.md | trace-flowfile command |
+| Check versions | QUICKSTART_VERSIONS.md | Quick Commands |
+| Understand provenance | PROVENANCE_ANALYSIS_GUIDE.md | Overview |
+| Add new features | VERSIONING.md | Adding New Versions |
+| Fix version errors | QUICKSTART_VERSIONS.md | Troubleshooting |
+| Deploy to cluster | README.md | Deployment Model |
+| Optimize performance | README_ANALYSIS.md | Typical Workflows |
+
+---
+
+## 📁 File Organization
+
+```
 nifi_metrics_collector/
 ├── README.md                           # Main documentation (START HERE)
 ├── README_ANALYSIS.md                  # Analysis tool guide
@@ -185,60 +216,74 @@ nifi_metrics_collector/
 │   └── CLEANUP.md                      # Cleanup guide
 │
 └── [other files...]
-Note: Documents are currently in the root directory. Consider organizing into subdirectories as shown above.
+```
 
-📊 Documentation by Role
-For Operators
+**Note**: Documents are currently in the root directory. Consider organizing into subdirectories as shown above.
 
-README.md - Setup and deployment
-README_ANALYSIS.md - Daily troubleshooting
-PROVENANCE_ANALYSIS_GUIDE.md - Advanced analysis
+---
 
-For Developers
+## 📊 Documentation by Role
 
-VERSIONING.md - Version management
-INTEGRATION_SUMMARY.md - Architecture
-VERSION_QUICKREF.md - Code snippets
+### For Operators
+1. **README.md** - Setup and deployment
+2. **README_ANALYSIS.md** - Daily troubleshooting
+3. **PROVENANCE_ANALYSIS_GUIDE.md** - Advanced analysis
 
-For Managers
+### For Developers
+1. **VERSIONING.md** - Version management
+2. **INTEGRATION_SUMMARY.md** - Architecture
+3. **VERSION_QUICKREF.md** - Code snippets
 
-README.md - Project overview
-PROVENANCE_FEATURES_SUMMARY.md - Capabilities & ROI
-README_ANALYSIS.md - Analysis capabilities
+### For Managers
+1. **README.md** - Project overview
+2. **PROVENANCE_FEATURES_SUMMARY.md** - Capabilities & ROI
+3. **README_ANALYSIS.md** - Analysis capabilities
 
-For New Users
+### For New Users
+1. **README.md** - Start here
+2. **QUICKSTART_VERSIONS.md** - Quick version intro
+3. **README_ANALYSIS.md** - Basic commands
 
-README.md - Start here
-QUICKSTART_VERSIONS.md - Quick version intro
-README_ANALYSIS.md - Basic commands
+---
 
+## 🆘 Getting Help
 
-🆘 Getting Help
-Common Issues
-ProblemSeeSectionInstallation failsREADME.mdInstallationCan't load dataREADME_ANALYSIS.mdTroubleshootingVersion errorsQUICKSTART_VERSIONS.mdTroubleshootingNo provenance dataPROVENANCE_ANALYSIS_GUIDE.mdCommon IssuesCollector not runningREADME.mdPart 1Analysis tool errorsREADME_ANALYSIS.mdTroubleshooting
-Support Resources
+### Common Issues
 
-GitHub Issues: Report bugs or request features
-Documentation: You're reading it!
-Code Comments: Inline documentation in source files
-Example Configs: Template files in config/
+| Problem | See | Section |
+|---------|-----|---------|
+| Installation fails | README.md | Installation |
+| Can't load data | README_ANALYSIS.md | Troubleshooting |
+| Version errors | QUICKSTART_VERSIONS.md | Troubleshooting |
+| No provenance data | PROVENANCE_ANALYSIS_GUIDE.md | Common Issues |
+| Collector not running | README.md | Part 1 |
+| Analysis tool errors | README_ANALYSIS.md | Troubleshooting |
 
+### Support Resources
 
-🔄 Keeping Documentation Updated
+- **GitHub Issues**: Report bugs or request features
+- **Documentation**: You're reading it!
+- **Code Comments**: Inline documentation in source files
+- **Example Configs**: Template files in `config/`
+
+---
+
+## 🔄 Keeping Documentation Updated
+
 When making changes:
+1. Update relevant documentation
+2. Check cross-references
+3. Update this index if adding new docs
+4. Update version history if applicable
 
-Update relevant documentation
-Check cross-references
-Update this index if adding new docs
-Update version history if applicable
+---
 
+## Summary
 
-Summary
+- **Start**: [README.md](README.md)
+- **Analyze**: [README_ANALYSIS.md](README_ANALYSIS.md)
+- **Versions**: [QUICKSTART_VERSIONS.md](QUICKSTART_VERSIONS.md)
+- **Provenance**: [PROVENANCE_ANALYSIS_GUIDE.md](PROVENANCE_ANALYSIS_GUIDE.md)
+- **Develop**: [VERSIONING.md](VERSIONING.md)
 
-Start: README.md
-Analyze: README_ANALYSIS.md
-Versions: QUICKSTART_VERSIONS.md
-Provenance: PROVENANCE_ANALYSIS_GUIDE.md
-Develop: VERSIONING.md
-
-Can't find what you're looking for? Check the "Quick Find" table above or open an issue on GitHub.
+**Can't find what you're looking for?** Check the "Quick Find" table above or open an issue on GitHub.

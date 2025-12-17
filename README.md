@@ -457,3 +457,4 @@ Contributions are welcome! Please ensure all tests pass before submitting pull r
 
 📧 Support
 [Add your support contact information here]
+

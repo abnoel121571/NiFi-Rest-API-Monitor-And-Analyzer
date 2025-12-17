@@ -43,14 +43,88 @@ def _delete_request(url, auth, token, timeout):
         raise
 
 def get_nifi_processors(nifi_api_url, auth=None, token=None, timeout=10, process_group_id='root'):
-    """Retrieves all processors from a given process group."""
+    """Retrieves all processors from a given process group (non-recursive)."""
     url = f"{nifi_api_url}/process-groups/{process_group_id}/processors"
     return _get_request(url, auth, token, timeout)
 
+def get_nifi_processors_flow(nifi_api_url, auth=None, token=None, timeout=10, process_group_id='root'):
+    """
+    Retrieves all processors from a process group and all descendants using the /flow endpoint.
+    This includes processors from nested process groups.
+    
+    Args:
+        nifi_api_url: Base NiFi API URL
+        auth: HTTP Basic Auth object
+        token: Bearer token
+        timeout: Request timeout
+        process_group_id: Process group ID (default: 'root')
+    
+    Returns:
+        Dictionary with 'processors' key containing list of processor objects
+    """
+    url = f"{nifi_api_url}/flow/process-groups/{process_group_id}"
+    logging.debug(f"Fetching processors recursively from: {url}")
+    
+    try:
+        data = _get_request(url, auth, token, timeout)
+        
+        # Navigate the response structure
+        process_group_flow = data.get("processGroupFlow", {})
+        flow = process_group_flow.get("flow", {})
+        
+        # Processors are directly in the flow
+        processors = flow.get("processors", [])
+        
+        logging.info(f"Retrieved {len(processors)} processors (recursive) from process group {process_group_id}")
+        
+        return {"processors": processors}
+        
+    except Exception as e:
+        logging.error(f"Failed to retrieve processors from flow endpoint: {e}")
+        logging.warning("Falling back to non-recursive processor collection")
+        return get_nifi_processors(nifi_api_url, auth, token, timeout, process_group_id)
+
 def get_nifi_connections(nifi_api_url, auth=None, token=None, timeout=10, process_group_id='root'):
-    """Retrieves all connections from a given process group."""
+    """Retrieves all connections from a given process group (non-recursive)."""
     url = f"{nifi_api_url}/process-groups/{process_group_id}/connections"
     return _get_request(url, auth, token, timeout)
+
+def get_nifi_connections_flow(nifi_api_url, auth=None, token=None, timeout=10, process_group_id='root'):
+    """
+    Retrieves all connections from a process group and all descendants using the /flow endpoint.
+    This includes connections from nested process groups.
+    
+    Args:
+        nifi_api_url: Base NiFi API URL
+        auth: HTTP Basic Auth object
+        token: Bearer token
+        timeout: Request timeout
+        process_group_id: Process group ID (default: 'root')
+    
+    Returns:
+        Dictionary with 'connections' key containing list of connection objects
+    """
+    url = f"{nifi_api_url}/flow/process-groups/{process_group_id}"
+    logging.debug(f"Fetching connections recursively from: {url}")
+    
+    try:
+        data = _get_request(url, auth, token, timeout)
+        
+        # Navigate the response structure
+        process_group_flow = data.get("processGroupFlow", {})
+        flow = process_group_flow.get("flow", {})
+        
+        # Connections are directly in the flow
+        connections = flow.get("connections", [])
+        
+        logging.info(f"Retrieved {len(connections)} connections (recursive) from process group {process_group_id}")
+        
+        return {"connections": connections}
+        
+    except Exception as e:
+        logging.error(f"Failed to retrieve connections from flow endpoint: {e}")
+        logging.warning("Falling back to non-recursive connection collection")
+        return get_nifi_connections(nifi_api_url, auth, token, timeout, process_group_id)
 
 def get_nifi_system_diagnostics(nifi_api_url, auth=None, token=None, timeout=10):
     """Retrieves system diagnostics, including JVM metrics."""
@@ -172,4 +246,3 @@ def query_nifi_provenance(nifi_api_url, auth=None, token=None, timeout=30, query
     except Exception as e:
         logging.error(f"Failed to query provenance data: {e}")
         raise
-

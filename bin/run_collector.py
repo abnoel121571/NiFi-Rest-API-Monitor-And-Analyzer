@@ -6,7 +6,7 @@ import uuid
 import argparse
 import logging
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
 # Add lib directory to path
@@ -16,11 +16,13 @@ try:
     from lib.config_loader import load_config, load_secrets
     from lib.nifi_client import (
         get_nifi_processors, get_nifi_connections, get_nifi_system_diagnostics,
-        get_nifi_controller_services, get_nifi_reporting_tasks, get_nifi_bulletins
+        get_nifi_controller_services, get_nifi_reporting_tasks, get_nifi_bulletins,
+        query_nifi_provenance
     )
     from lib.metrics_parser import (
         extract_processor_metrics, extract_connection_metrics, extract_jvm_metrics,
-        extract_controller_service_metrics, extract_reporting_task_metrics, extract_bulletin_metrics
+        extract_controller_service_metrics, extract_reporting_task_metrics, 
+        extract_bulletin_metrics, extract_provenance_metrics
     )
     from lib.system_metrics import get_system_metrics
     from lib.storage_writer import write_to_aws, write_to_azure, write_to_local
@@ -53,6 +55,38 @@ def process_config_template(config, hostname):
     config_str = json.dumps(config)
     config_str = config_str.replace("{hostname}", hostname)
     return json.loads(config_str)
+
+def build_provenance_query_params(config, flow_config=None):
+    """
+    Builds provenance query parameters from configuration.
+    
+    Returns a dictionary with query parameters like startDate, endDate, maxResults, etc.
+    """
+    # Get provenance-specific config
+    prov_config = flow_config.get("provenance_config", {}) if flow_config else config.get("provenance_config", {})
+    
+    query_params = {}
+    
+    # Time window - can be specified as minutes ago or absolute times
+    lookback_minutes = prov_config.get("lookback_minutes")
+    if lookback_minutes:
+        end_time = datetime.utcnow()
+        start_time = end_time - timedelta(minutes=lookback_minutes)
+        query_params["startDate"] = start_time.strftime("%m/%d/%Y %H:%M:%S")
+        query_params["endDate"] = end_time.strftime("%m/%d/%Y %H:%M:%S")
+    
+    # Max results
+    query_params["maxResults"] = prov_config.get("max_results", 1000)
+    
+    # Event type filter (e.g., DROP, SEND, RECEIVE)
+    if "event_type" in prov_config:
+        query_params["eventType"] = prov_config["event_type"]
+    
+    # Component ID filter
+    if "component_id" in prov_config:
+        query_params["componentId"] = prov_config["component_id"]
+    
+    return query_params if query_params else None
 
 def collect_and_store(config, secrets, auth, token, components_to_run, flow_config=None):
     """Collects metrics for a given set of components and writes them to storage."""
@@ -92,6 +126,29 @@ def collect_and_store(config, secrets, auth, token, components_to_run, flow_conf
             collections[key] = extract_connection_metrics(connections["connections"], config["connection_metrics"], flow_name)
         except Exception as e:
             logging.error(f"Failed to collect Connection metrics for '{flow_name or 'root'}': {e}")
+
+    if "Provenance" in components_to_run:
+        try:
+            # Build query parameters
+            query_params = build_provenance_query_params(config, flow_config)
+            
+            # Use longer timeout for provenance queries
+            prov_timeout = config.get("nifi_provenance_timeout_seconds", 60)
+            
+            logging.info(f"Querying provenance data for '{flow_name or 'root'}' with params: {query_params}")
+            provenance_response = query_nifi_provenance(
+                config["nifi_api_url"], auth, token, prov_timeout, query_params
+            )
+            
+            key = f"{collection_prefix}nifi_provenance"
+            collections[key] = extract_provenance_metrics(
+                provenance_response, 
+                flow_name=flow_name,
+                process_group_id=pg_id
+            )
+            
+        except Exception as e:
+            logging.error(f"Failed to collect Provenance data for '{flow_name or 'root'}': {e}")
 
     # --- Global Components ---
     if "System" in components_to_run:
@@ -219,6 +276,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

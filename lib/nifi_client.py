@@ -172,3 +172,4 @@ def query_nifi_provenance(nifi_api_url, auth=None, token=None, timeout=30, query
     except Exception as e:
         logging.error(f"Failed to query provenance data: {e}")
         raise
+

@@ -15,7 +15,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 try:
     from lib.config_loader import load_config, load_secrets
     from lib.nifi_client import (
-        get_nifi_processors, get_nifi_connections, get_nifi_system_diagnostics,
+        get_nifi_processors, get_nifi_processors_flow,
+        get_nifi_connections, get_nifi_connections_flow,
+        get_nifi_system_diagnostics,
         get_nifi_controller_services, get_nifi_reporting_tasks, get_nifi_bulletins,
         query_nifi_provenance
     )
@@ -111,7 +113,12 @@ def collect_and_store(config, secrets, auth, token, components_to_run, flow_conf
     # --- Flow-Specific Components ---
     if "Processor" in components_to_run:
         try:
-            processors = get_nifi_processors(config["nifi_api_url"], auth, token, timeout, pg_id)
+            # Use recursive collection by default
+            if config.get("recursive_collection", True):
+                processors = get_nifi_processors_flow(config["nifi_api_url"], auth, token, timeout, pg_id)
+            else:
+                processors = get_nifi_processors(config["nifi_api_url"], auth, token, timeout, pg_id)
+            
             key = f"{collection_prefix}nifi_processor"
             collections[key] = extract_processor_metrics(
                 processors["processors"], config["processor_metrics"], flow_name, processor_filter
@@ -121,7 +128,12 @@ def collect_and_store(config, secrets, auth, token, components_to_run, flow_conf
 
     if "Connection" in components_to_run:
         try:
-            connections = get_nifi_connections(config["nifi_api_url"], auth, token, timeout, pg_id)
+            # Use recursive collection by default
+            if config.get("recursive_collection", True):
+                connections = get_nifi_connections_flow(config["nifi_api_url"], auth, token, timeout, pg_id)
+            else:
+                connections = get_nifi_connections(config["nifi_api_url"], auth, token, timeout, pg_id)
+            
             key = f"{collection_prefix}nifi_connection"
             collections[key] = extract_connection_metrics(connections["connections"], config["connection_metrics"], flow_name)
         except Exception as e:

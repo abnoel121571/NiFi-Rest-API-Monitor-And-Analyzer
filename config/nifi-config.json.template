@@ -4,7 +4,9 @@
   "use_token_auth": true,
   "nifi_token_lifetime_seconds": 43200,
   "nifi_timeout_seconds": 10,
+  "nifi_provenance_timeout_seconds": 60,
   "log_level": "INFO",
+  "recursive_collection": true,
 
   "collection_intervals_seconds": {
     "global_default": 300,
@@ -14,7 +16,8 @@
     "ReportingTasks": 600,
     "Bulletins": 60,
     "SystemDiagnostics": 3600,
-    "System": 180
+    "System": 180,
+    "Provenance": 300
   },
 
   "components_to_monitor": [
@@ -24,11 +27,31 @@
     "ReportingTasks",
     "Bulletins",
     "SystemDiagnostics",
-    "System"
+    "System",
+    "Provenance"
   ],
   
   "monitored_processor_names": [],
-  "flows_to_monitor": [],
+  
+  "provenance_config": {
+    "lookback_minutes": 5,
+    "max_results": 1000
+  },
+  
+  "flows_to_monitor": [
+    {
+      "name": "example_flow",
+      "process_group_id": "abc123-process-group-id",
+      "interval_seconds": 300,
+      "components_to_monitor": ["Processor", "Connection", "Provenance"],
+      "monitored_processor_names": ["ProcessorA", "ProcessorB"],
+      "provenance_config": {
+        "lookback_minutes": 10,
+        "max_results": 500,
+        "event_type": "DROP"
+      }
+    }
+  ],
 
   "processor_metrics": [
     "nifi_amount_bytes_written",
@@ -58,4 +81,3 @@
       "activeThreadCount"
   ]
 }
-
